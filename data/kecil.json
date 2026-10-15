@@ -1,0 +1,12 @@
+{
+  "ships": [
+    {"Dimensions": {"w": 5, "l": 8}, "MaxCapacity": 20}
+  ],
+  "vehicles": [
+    {"id": "V1", "Dimensions": {"w": 2, "l": 3}, "ShippingFee": 60, "Weight": 5, "ETA": 3},
+    {"id": "V2", "Dimensions": {"w": 2, "l": 4}, "ShippingFee": 80, "Weight": 7, "ETA": 2},
+    {"id": "V3", "Dimensions": {"w": 1, "l": 2}, "ShippingFee": 25, "Weight": 2, "ETA": 5},
+    {"id": "V4", "Dimensions": {"w": 3, "l": 3}, "ShippingFee": 70, "Weight": 8, "ETA": 1},
+    {"id": "V5", "Dimensions": {"w": 2, "l": 2}, "ShippingFee": 30, "Weight": 4, "ETA": 4}
+  ]
+}
