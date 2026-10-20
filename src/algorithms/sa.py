@@ -6,6 +6,17 @@ import time
 from src.initial import random_initial_state
 from src.objective import objective
 
+def cooling_schedule(t, initial_temp, cooling_rate, max_iterations):
+    # Hitung temperatur SA menggunakan geometric cooling
+
+    # Cek indeks iterasi tidak boleh negatif atau bukan bil. bulat
+    if not isinstance(t, int) or t < 0:
+        raise ValueError("Indeks iterasi harus bilangan bulat non-negatif")
+
+    if t >= max_iterations:
+        return 0.0
+
+    return initial_temp * (cooling_rate ** t)
 
 def simulated_annealing(
     problem,
