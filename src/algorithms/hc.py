@@ -121,3 +121,34 @@ def hill_climb_stochastic(problem, rng, initial_state=None, max_iterations=1000)
         "duration_s": time.perf_counter() - start_time,
         "used_fallback": used_fallback,
     }
+
+
+def hill_climb_random_restart(problem, rng, initial_state=None, max_restarts=10):
+    start_time = time.perf_counter()
+    first = hill_climb(problem, rng, initial_state)
+    best = first
+    history = list(first["history"])
+    iterations_per_restart = [first["iterations"]]
+    used_fallback = first["used_fallback"]
+
+    for _ in range(max_restarts):
+        result = hill_climb(problem, rng)
+        history += result["history"]
+        iterations_per_restart.append(result["iterations"])
+        used_fallback = used_fallback or result["used_fallback"]
+        if result["history"][-1] > best["history"][-1]:
+            best = result
+
+    return {
+        "algorithm": "hc_random_restart",
+        "params": {"max_restarts": max_restarts},
+        "initial_state": first["initial_state"],
+        "final_state": best["final_state"],
+        "history": history,
+        "moves": best["moves"],
+        "iterations": sum(iterations_per_restart),
+        "restarts": max_restarts,
+        "iterations_per_restart": iterations_per_restart,
+        "duration_s": time.perf_counter() - start_time,
+        "used_fallback": used_fallback,
+    }
