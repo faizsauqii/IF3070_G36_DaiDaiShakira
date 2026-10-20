@@ -56,6 +56,14 @@ def simulated_annealing(
     best_history = [best_value]
     moves = []
     iterations = 0
+    temperature_history = []
+    delta_history = []
+    acceptance_probability_history = []
+    accepted_history = []
+
+    invalid_neighbors = 0
+    accepted_worse_moves = 0
+
 
     for t in range(max_iterations):
         temperature = cooling_schedule(
@@ -70,17 +78,38 @@ def simulated_annealing(
 
         move, neighbor = get_random_neighbor(current, rng)
 
-        if neighbor is not None:
+
+        temperature_history.append(temperature)
+
+        move, neighbor = get_random_neighbor(current, rng)
+
+        # Nilai default untuk neighbor yang tidak valid.
+        delta_e = None
+        acceptance_probability = None
+        accepted = False
+
+        if neighbor is None:
+            invalid_neighbors += 1
+
+        else:
             neighbor_value = objective(neighbor)
             delta_e = neighbor_value - current_value
 
             if delta_e >= 0:
+                acceptance_probability = 1.0
                 accepted = True
             else:
-                probability = math.exp(delta_e / temperature)
-                accepted = rng.random() < probability
+                acceptance_probability = math.exp(
+                    delta_e / temperature
+                )
+                accepted = (
+                    rng.random() < acceptance_probability
+                )
 
             if accepted:
+                if delta_e < 0:
+                    accepted_worse_moves += 1
+
                 current = neighbor
                 current_value = neighbor_value
                 moves.append(move)
@@ -88,6 +117,12 @@ def simulated_annealing(
                 if current_value > best_value:
                     best = current
                     best_value = current_value
+
+        delta_history.append(delta_e)
+        acceptance_probability_history.append(
+            acceptance_probability
+        )
+        accepted_history.append(accepted)
 
         iterations += 1
         history.append(current_value)
@@ -104,4 +139,16 @@ def simulated_annealing(
         "iterations": iterations,
         "duration_s": time.perf_counter() - start_time,
         "used_fallback": used_fallback,
+        "temperature_history": temperature_history,
+        "delta_history": delta_history,
+        "acceptance_probability_history": (
+            acceptance_probability_history
+        ),
+        "accepted_history": accepted_history,
+        "invalid_neighbors": invalid_neighbors,
+        "invalid_neighbor_percentage": (
+            100.0 * invalid_neighbors / iterations
+            if iterations > 0 else 0.0
+        ),
+        "accepted_worse_moves": accepted_worse_moves,
     }
