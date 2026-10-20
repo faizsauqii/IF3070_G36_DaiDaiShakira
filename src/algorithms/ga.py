@@ -1,6 +1,7 @@
 from src.constraints import is_valid
 from src.initial import random_initial_state
 from src.models import State
+from src.neighbors import get_random_neighbor
 
 
 def make_population(problem, size, rng, p):
@@ -42,3 +43,10 @@ def crossover(a, b, rng):
             child.positions[i] = None
             child.orientations[i] = None
     return child
+
+
+def mutate(state, rate, rng):
+    if rng.random() >= rate:
+        return state
+    _, neighbor = get_random_neighbor(state, rng)
+    return neighbor if neighbor is not None else state
