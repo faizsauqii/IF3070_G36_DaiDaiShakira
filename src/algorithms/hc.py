@@ -2,7 +2,7 @@ import time
 
 from src.initial import random_initial_state
 from src.objective import objective
-from src.neighbors import get_all_neighbors
+from src.neighbors import get_all_neighbors, get_random_neighbor
 
 
 def hill_climb(problem, rng, initial_state=None):
@@ -81,6 +81,43 @@ def hill_climb_sideways(problem, rng, initial_state=None, max_sideways=100):
         "moves": moves,
         "iterations": len(moves),
         "sideways_moves": sideways,
+        "duration_s": time.perf_counter() - start_time,
+        "used_fallback": used_fallback,
+    }
+
+
+def hill_climb_stochastic(problem, rng, initial_state=None, max_iterations=1000):
+    start_time = time.perf_counter()
+    used_fallback = False
+    if initial_state is None:
+        initial_state, used_fallback = random_initial_state(problem, rng)
+
+    current = initial_state
+    current_value = objective(current)
+    history = [current_value]
+    moves = []
+    invalid = 0
+
+    for _ in range(max_iterations):
+        move, neighbor = get_random_neighbor(current, rng)
+        if neighbor is None:
+            invalid += 1
+        else:
+            value = objective(neighbor)
+            if value > current_value:
+                current, current_value = neighbor, value
+                moves.append(move)
+        history.append(current_value)
+
+    return {
+        "algorithm": "hc_stochastic",
+        "params": {"max_iterations": max_iterations},
+        "initial_state": initial_state,
+        "final_state": current,
+        "history": history,
+        "moves": moves,
+        "iterations": max_iterations,
+        "invalid_neighbors": invalid,
         "duration_s": time.perf_counter() - start_time,
         "used_fallback": used_fallback,
     }
