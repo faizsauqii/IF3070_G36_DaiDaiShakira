@@ -2,9 +2,11 @@
 """
 
 import time
+import math
 
 from src.initial import random_initial_state
 from src.objective import objective
+from src.neighbors import get_random_neighbor
 
 def cooling_schedule(t, initial_temp, cooling_rate, max_iterations):
     # Hitung temperatur SA menggunakan geometric cooling
@@ -43,23 +45,63 @@ def simulated_annealing(
     if initial_state is None:
         initial_state, used_fallback = random_initial_state(problem, rng)
 
+
     current = initial_state
     current_value = objective(current)
 
     best = current
     best_value = current_value
 
-    # TODO: checkpoint berikutnya menambahkan loop dan cooling schedule.
+    history = [current_value]
+    best_history = [best_value]
+    moves = []
+    iterations = 0
+
+    for t in range(max_iterations):
+        temperature = cooling_schedule(
+            t,
+            initial_temp,
+            cooling_rate,
+            max_iterations,
+        )
+
+        if temperature <= 0:
+            break
+
+        move, neighbor = get_random_neighbor(current, rng)
+
+        if neighbor is not None:
+            neighbor_value = objective(neighbor)
+            delta_e = neighbor_value - current_value
+
+            if delta_e >= 0:
+                accepted = True
+            else:
+                probability = math.exp(delta_e / temperature)
+                accepted = rng.random() < probability
+
+            if accepted:
+                current = neighbor
+                current_value = neighbor_value
+                moves.append(move)
+
+                if current_value > best_value:
+                    best = current
+                    best_value = current_value
+
+        iterations += 1
+        history.append(current_value)
+        best_history.append(best_value)
 
     return {
         "algorithm": "sa",
         "initial_state": initial_state,
         "final_state": current,
         "best_state": best,
-        "history": [current_value],
-        "best_history": [best_value],
-        "moves": [],
-        "iterations": 0,
+        "history": history,
+        "best_history": best_history,
+        "moves": moves,
+        "iterations": iterations,
         "duration_s": time.perf_counter() - start_time,
         "used_fallback": used_fallback,
     }
