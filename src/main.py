@@ -6,9 +6,21 @@ import random
 from src.loader import load_problem
 from src.objective import total_fee, objective
 from src.neighbors import describe_move
-from src.algorithms.hc import hill_climb
+from src.algorithms.hc import (
+    hill_climb,
+    hill_climb_sideways,
+    hill_climb_stochastic,
+    hill_climb_random_restart,
+)
 
-ALGORITHMS = {"hc": hill_climb}
+ALGORITHMS = {
+    "hc": hill_climb,
+    "hc_sideways": hill_climb_sideways,
+    "hc_stochastic": hill_climb_stochastic,
+    "hc_random_restart": hill_climb_random_restart,
+}
+
+EXTRA_KEYS = ["sideways_moves", "invalid_neighbors", "restarts", "iterations_per_restart"]
 
 
 def state_to_list(state):
@@ -21,11 +33,13 @@ def state_to_list(state):
 
 def build_record(problem, result, data_file, seed, params):
     final_state = result["final_state"]
+    extra = {key: result[key] for key in EXTRA_KEYS if key in result}
+    extra["moves"] = [describe_move(problem, m) for m in result.get("moves", [])]
     return {
         "algorithm": result["algorithm"],
         "data_file": data_file,
         "seed": seed,
-        "params": params,
+        "params": result.get("params", params),
         "initial_state": state_to_list(result["initial_state"]),
         "final_state": state_to_list(final_state),
         "final_fee": total_fee(final_state),
@@ -34,7 +48,7 @@ def build_record(problem, result, data_file, seed, params):
         "duration_s": result["duration_s"],
         "used_fallback": result["used_fallback"],
         "history": result["history"],
-        "extra": {"moves": [describe_move(problem, m) for m in result.get("moves", [])]},
+        "extra": extra,
     }
 
 
