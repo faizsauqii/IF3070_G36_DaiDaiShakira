@@ -1,11 +1,9 @@
 
 """Visualisasi hasil pencarian HC, SA, dan GA."""
-
+import math
 from pathlib import Path
-
 import matplotlib.pyplot as plt
 from matplotlib.patches import Rectangle
-
 from src.constraints import is_valid, total_weight
 from src.objective import objective, total_fee
 
@@ -266,6 +264,104 @@ def plot_sa_acceptance_probability(result, save_path):
         bbox_inches="tight",
     )
 
+    plt.close(fig)
+
+    return str(output_path)
+
+
+def plot_sa_exponential(result, save_path):
+    """Plot nilai e^(delta E / T) untuk setiap neighbor valid."""
+
+    if result.get("algorithm") != "sa":
+        raise ValueError("Grafik ini hanya untuk SA")
+
+    extra = result.get("extra") or {}
+
+    deltas = result.get(
+        "delta_history",
+        extra.get("delta_history"),
+    )
+    temperatures = result.get(
+        "temperature_history",
+        extra.get("temperature_history"),
+    )
+
+    if deltas is None or temperatures is None:
+        raise ValueError("Histori delta dan temperatur tidak tersedia")
+
+    if len(deltas) != len(temperatures):
+        raise ValueError("Panjang histori tidak konsisten")
+
+    x_values = []
+    y_values = []
+    clipped_count = 0
+
+    for t, (delta, temperature) in enumerate(
+        zip(deltas, temperatures)
+    ):
+        # Neighbor invalid tidak memiliki delta E.
+        if delta is None:
+            continue
+
+        if temperature <= 0:
+            raise ValueError("Temperatur harus positif")
+
+        exponent = delta / temperature
+
+        # Hindari overflow/underflow saat menghitung exp().
+        safe_exponent = max(-700, min(700, exponent))
+
+        if safe_exponent != exponent:
+            clipped_count += 1
+
+        x_values.append(t)
+        y_values.append(math.exp(safe_exponent))
+
+    if not x_values:
+        raise ValueError("Tidak ada neighbor valid untuk diplot")
+
+    fig, ax = plt.subplots(figsize=(9, 5))
+
+    ax.scatter(
+        x_values,
+        y_values,
+        s=16,
+        alpha=0.75,
+        label="e^(ΔE/T)",
+    )
+
+    ax.axhline(
+        1.0,
+        linestyle="--",
+        color="gray",
+        alpha=0.7,
+        label="Nilai 1",
+    )
+
+    ax.set_yscale("log")
+    ax.set_title("Nilai Eksponensial SA per Iterasi")
+    ax.set_xlabel("Iterasi")
+    ax.set_ylabel("e^(ΔE/T) - skala logaritmik")
+    ax.grid(True, alpha=0.3)
+    ax.legend()
+
+    if clipped_count:
+        ax.text(
+            0.02,
+            0.02,
+            f"{clipped_count} nilai dibatasi untuk stabilitas numerik",
+            transform=ax.transAxes,
+            fontsize=8,
+        )
+
+    output_path = Path(save_path)
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+
+    fig.savefig(
+        output_path,
+        dpi=150,
+        bbox_inches="tight",
+    )
     plt.close(fig)
 
     return str(output_path)
