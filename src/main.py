@@ -12,12 +12,14 @@ from src.algorithms.hc import (
     hill_climb_stochastic,
     hill_climb_random_restart,
 )
+from src.algorithms.sa import simulated_annealing
 
 ALGORITHMS = {
     "hc": hill_climb,
     "hc_sideways": hill_climb_sideways,
     "hc_stochastic": hill_climb_stochastic,
     "hc_random_restart": hill_climb_random_restart,
+    "sa": simulated_annealing,
 }
 
 EXTRA_KEYS = ["sideways_moves", "invalid_neighbors", "restarts", "iterations_per_restart"]
