@@ -176,6 +176,11 @@ def simulated_annealing(
 
     return {
         "algorithm": "sa",
+        "params": {
+            "initial_temp": initial_temp,
+            "cooling_rate": cooling_rate,
+            "max_iterations": max_iterations,
+        },
         "initial_state": initial_state,
         "final_state": current,
         "best_state": best,
