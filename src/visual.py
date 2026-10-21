@@ -217,3 +217,55 @@ def plot_deck_state(state, save_path, title="Susunan Kendaraan"):
     plt.close(fig)
 
     return str(path)
+
+def plot_sa_acceptance_probability(result, save_path):
+    """Simpan grafik probabilitas penerimaan kandidat pada SA."""
+
+    if result.get("algorithm") != "sa":
+        raise ValueError("Fungsi ini hanya untuk hasil Simulated Annealing")
+
+    probabilities = result.get("acceptance_probability_history")
+    temperatures = result.get("temperature_history")
+    deltas = result.get("delta_history")
+
+    if probabilities is None or temperatures is None or deltas is None:
+        raise ValueError("Data SA tidak lengkap untuk membuat grafik probabilitas")
+
+    if not (
+        len(probabilities) == len(temperatures) == len(deltas)
+    ):
+        raise ValueError("Panjang data probabilitas SA tidak konsisten")
+
+    fig, ax = plt.subplots(figsize=(9, 5))
+
+    x = list(range(len(probabilities)))
+    y = [
+        p if p is not None else float("nan")
+        for p in probabilities
+    ]
+
+    ax.plot(x, y, label="Probabilitas penerimaan")
+
+    ax.set_title("Probabilitas Penerimaan Kandidat - SA")
+    ax.set_xlabel("Iterasi")
+    ax.set_ylabel("Probabilitas")
+    ax.set_ylim(0, 1.05)
+    ax.set_xlim(left=0)
+    ax.grid(True, alpha=0.3)
+    ax.legend()
+
+    output_path = Path(save_path)
+    output_path.parent.mkdir(
+        parents=True,
+        exist_ok=True,
+    )
+
+    fig.savefig(
+        output_path,
+        dpi=150,
+        bbox_inches="tight",
+    )
+
+    plt.close(fig)
+
+    return str(output_path)
