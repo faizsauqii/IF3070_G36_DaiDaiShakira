@@ -107,7 +107,6 @@ def simulated_annealing(
         if temperature <= 0:
             break
 
-        move, neighbor = get_random_neighbor(current, rng)
 
 
         temperature_history.append(temperature)
