@@ -22,7 +22,10 @@ ALGORITHMS = {
     "sa": simulated_annealing,
 }
 
-EXTRA_KEYS = ["sideways_moves", "invalid_neighbors", "restarts", "iterations_per_restart"]
+CORE_KEYS = {
+    "algorithm", "params", "initial_state", "final_state", "best_state",
+    "history", "moves", "iterations", "duration_s", "used_fallback",
+}
 
 
 def state_to_list(state):
@@ -35,9 +38,9 @@ def state_to_list(state):
 
 def build_record(problem, result, data_file, seed, params):
     final_state = result["final_state"]
-    extra = {key: result[key] for key in EXTRA_KEYS if key in result}
+    extra = {key: value for key, value in result.items() if key not in CORE_KEYS}
     extra["moves"] = [describe_move(problem, m) for m in result.get("moves", [])]
-    return {
+    record = {
         "algorithm": result["algorithm"],
         "data_file": data_file,
         "seed": seed,
@@ -52,6 +55,12 @@ def build_record(problem, result, data_file, seed, params):
         "history": result["history"],
         "extra": extra,
     }
+    best_state = result.get("best_state")
+    if best_state is not None:
+        record["best_state"] = state_to_list(best_state)
+        record["best_fee"] = total_fee(best_state)
+        record["best_objective"] = objective(best_state)
+    return record
 
 
 def save_record(record, run):
