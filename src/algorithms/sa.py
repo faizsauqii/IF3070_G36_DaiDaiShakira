@@ -6,7 +6,7 @@ import math
 
 from src.initial import random_initial_state
 from src.objective import objective
-from src.neighbors import get_random_neighbor
+from src.neighbors import get_all_neighbors, get_random_neighbor
 
 def cooling_schedule(t, initial_temp, cooling_rate, max_iterations):
     # Hitung temperatur SA menggunakan geometric cooling
@@ -19,6 +19,36 @@ def cooling_schedule(t, initial_temp, cooling_rate, max_iterations):
         return 0.0
 
     return initial_temp * (cooling_rate ** t)
+
+
+def is_local_maximum(state):
+    """Periksa apakah state tidak memiliki neighbor valid yang lebih baik."""
+
+    current_value = objective(state)
+
+    for move, neighbor in get_all_neighbors(state):
+        neighbor_value = objective(neighbor)
+
+        if neighbor_value > current_value:
+            return False
+
+    return True
+
+def count_stuck_episodes(visited_states):
+    """Hitung episode ketika pencarian berada di local maximum."""
+
+    stuck_count = 0
+    was_local_maximum = False
+
+    for state in visited_states:
+        current_is_local_maximum = is_local_maximum(state)
+
+        if current_is_local_maximum and not was_local_maximum:
+            stuck_count += 1
+
+        was_local_maximum = current_is_local_maximum
+
+    return stuck_count
 
 def simulated_annealing(
     problem,
@@ -56,6 +86,7 @@ def simulated_annealing(
     best_history = [best_value]
     moves = []
     iterations = 0
+    visited_states = [current]
     temperature_history = []
     delta_history = []
     acceptance_probability_history = []
@@ -113,6 +144,7 @@ def simulated_annealing(
                 current = neighbor
                 current_value = neighbor_value
                 moves.append(move)
+                visited_states.append(current)
 
                 if current_value > best_value:
                     best = current
@@ -128,6 +160,21 @@ def simulated_annealing(
         history.append(current_value)
         best_history.append(best_value)
 
+    # Durasi inti pencarian SA, tanpa diagnosis stuck.
+    duration_s = time.perf_counter() - start_time
+
+    # Diagnosis local maximum dilakukan setelah pencarian selesai.
+    diagnosis_start = time.perf_counter()
+
+    stuck_count = count_stuck_episodes(visited_states)
+
+    diagnosis_duration_s = (
+        time.perf_counter() - diagnosis_start
+    )
+
+
+
+
     return {
         "algorithm": "sa",
         "initial_state": initial_state,
@@ -137,7 +184,7 @@ def simulated_annealing(
         "best_history": best_history,
         "moves": moves,
         "iterations": iterations,
-        "duration_s": time.perf_counter() - start_time,
+        "duration_s": duration_s,
         "used_fallback": used_fallback,
         "temperature_history": temperature_history,
         "delta_history": delta_history,
@@ -151,4 +198,6 @@ def simulated_annealing(
             if iterations > 0 else 0.0
         ),
         "accepted_worse_moves": accepted_worse_moves,
+        "stuck_count": stuck_count,
+        "diagnosis_duration_s": diagnosis_duration_s,
     }
