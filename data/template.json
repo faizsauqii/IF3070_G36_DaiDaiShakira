@@ -1,0 +1,27 @@
+{
+  "_keterangan": "File ini adalah contoh data. Salin file ini, ubah angkanya, lalu simpan di folder data/ dengan nama lain (misalnya data/punyaku.json). Semua kunci yang diawali garis bawah (_) hanya penjelasan dan diabaikan oleh program.",
+  "ships": [
+    {
+      "_keterangan": "Daftar kapal. Dimensions = ukuran geladak dalam satuan kotak grid: w = lebar, l = panjang. MaxCapacity = batas total berat kendaraan yang boleh diangkut kapal.",
+      "Dimensions": {"w": 10, "l": 20},
+      "MaxCapacity": 100
+    }
+  ],
+  "vehicles": [
+    {
+      "_keterangan": "Daftar kendaraan yang antre. id = kode kendaraan (harus unik). Dimensions = ukuran kendaraan dalam satuan kotak grid (w = lebar, l = panjang). ShippingFee = ongkos kirim yang didapat jika kendaraan dimuat (juta rupiah). Weight = berat kendaraan. ETA = perkiraan sisa hari sampai kendaraan tiba.",
+      "id": "V1",
+      "Dimensions": {"w": 2, "l": 4},
+      "ShippingFee": 60,
+      "Weight": 8,
+      "ETA": 3
+    },
+    {
+      "id": "V2",
+      "Dimensions": {"w": 3, "l": 5},
+      "ShippingFee": 90,
+      "Weight": 15,
+      "ETA": 2
+    }
+  ]
+}
