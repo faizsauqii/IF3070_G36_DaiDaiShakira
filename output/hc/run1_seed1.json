@@ -1,0 +1,244 @@
+{
+  "algorithm": "hc",
+  "data_file": "data/sedang.json",
+  "seed": 1,
+  "params": {},
+  "initial_state": [
+    {
+      "id": "V1",
+      "ship": 0,
+      "x": 4,
+      "y": 7,
+      "orientation": "Horizontal"
+    },
+    {
+      "id": "V2",
+      "ship": null,
+      "x": null,
+      "y": null,
+      "orientation": null
+    },
+    {
+      "id": "V3",
+      "ship": null,
+      "x": null,
+      "y": null,
+      "orientation": null
+    },
+    {
+      "id": "V4",
+      "ship": null,
+      "x": null,
+      "y": null,
+      "orientation": null
+    },
+    {
+      "id": "V5",
+      "ship": 0,
+      "x": 12,
+      "y": 6,
+      "orientation": "Vertical"
+    },
+    {
+      "id": "V6",
+      "ship": null,
+      "x": null,
+      "y": null,
+      "orientation": null
+    },
+    {
+      "id": "V7",
+      "ship": null,
+      "x": null,
+      "y": null,
+      "orientation": null
+    },
+    {
+      "id": "V8",
+      "ship": null,
+      "x": null,
+      "y": null,
+      "orientation": null
+    },
+    {
+      "id": "V9",
+      "ship": 0,
+      "x": 11,
+      "y": 0,
+      "orientation": "Horizontal"
+    },
+    {
+      "id": "V10",
+      "ship": 0,
+      "x": 8,
+      "y": 4,
+      "orientation": "Horizontal"
+    },
+    {
+      "id": "V11",
+      "ship": null,
+      "x": null,
+      "y": null,
+      "orientation": null
+    },
+    {
+      "id": "V12",
+      "ship": null,
+      "x": null,
+      "y": null,
+      "orientation": null
+    },
+    {
+      "id": "V13",
+      "ship": null,
+      "x": null,
+      "y": null,
+      "orientation": null
+    },
+    {
+      "id": "V14",
+      "ship": null,
+      "x": null,
+      "y": null,
+      "orientation": null
+    },
+    {
+      "id": "V15",
+      "ship": null,
+      "x": null,
+      "y": null,
+      "orientation": null
+    }
+  ],
+  "final_state": [
+    {
+      "id": "V1",
+      "ship": null,
+      "x": null,
+      "y": null,
+      "orientation": null
+    },
+    {
+      "id": "V2",
+      "ship": null,
+      "x": null,
+      "y": null,
+      "orientation": null
+    },
+    {
+      "id": "V3",
+      "ship": null,
+      "x": null,
+      "y": null,
+      "orientation": null
+    },
+    {
+      "id": "V4",
+      "ship": 0,
+      "x": 8,
+      "y": 4,
+      "orientation": "Horizontal"
+    },
+    {
+      "id": "V5",
+      "ship": 0,
+      "x": 12,
+      "y": 6,
+      "orientation": "Vertical"
+    },
+    {
+      "id": "V6",
+      "ship": 0,
+      "x": 16,
+      "y": 7,
+      "orientation": "Horizontal"
+    },
+    {
+      "id": "V7",
+      "ship": 0,
+      "x": 4,
+      "y": 7,
+      "orientation": "Horizontal"
+    },
+    {
+      "id": "V8",
+      "ship": 0,
+      "x": 7,
+      "y": 1,
+      "orientation": "Horizontal"
+    },
+    {
+      "id": "V9",
+      "ship": 0,
+      "x": 11,
+      "y": 0,
+      "orientation": "Horizontal"
+    },
+    {
+      "id": "V10",
+      "ship": null,
+      "x": null,
+      "y": null,
+      "orientation": null
+    },
+    {
+      "id": "V11",
+      "ship": null,
+      "x": null,
+      "y": null,
+      "orientation": null
+    },
+    {
+      "id": "V12",
+      "ship": null,
+      "x": null,
+      "y": null,
+      "orientation": null
+    },
+    {
+      "id": "V13",
+      "ship": null,
+      "x": null,
+      "y": null,
+      "orientation": null
+    },
+    {
+      "id": "V14",
+      "ship": 0,
+      "x": 2,
+      "y": 2,
+      "orientation": "Horizontal"
+    },
+    {
+      "id": "V15",
+      "ship": 0,
+      "x": 10,
+      "y": 1,
+      "orientation": "Horizontal"
+    }
+  ],
+  "final_fee": 650,
+  "final_objective": 650.2079,
+  "iterations": 6,
+  "duration_s": 0.25687587494030595,
+  "used_fallback": false,
+  "history": [
+    215.297,
+    385.297,
+    535.22275,
+    615.22275,
+    625.2079,
+    640.2079,
+    650.2079
+  ],
+  "extra": {
+    "moves": [
+      "insert V14 at ship 0 (2, 2)",
+      "insert V6 at ship 0 (16, 7)",
+      "insert V8 at ship 0 (7, 1)",
+      "swap V4 <-> V10",
+      "insert V15 at ship 0 (10, 1)",
+      "swap V1 <-> V7"
+    ]
+  }
+}

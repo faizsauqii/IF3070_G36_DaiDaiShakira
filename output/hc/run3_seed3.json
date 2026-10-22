@@ -1,0 +1,240 @@
+{
+  "algorithm": "hc",
+  "data_file": "data/sedang.json",
+  "seed": 3,
+  "params": {},
+  "initial_state": [
+    {
+      "id": "V1",
+      "ship": null,
+      "x": null,
+      "y": null,
+      "orientation": null
+    },
+    {
+      "id": "V2",
+      "ship": null,
+      "x": null,
+      "y": null,
+      "orientation": null
+    },
+    {
+      "id": "V3",
+      "ship": null,
+      "x": null,
+      "y": null,
+      "orientation": null
+    },
+    {
+      "id": "V4",
+      "ship": 0,
+      "x": 5,
+      "y": 5,
+      "orientation": "Horizontal"
+    },
+    {
+      "id": "V5",
+      "ship": null,
+      "x": null,
+      "y": null,
+      "orientation": null
+    },
+    {
+      "id": "V6",
+      "ship": null,
+      "x": null,
+      "y": null,
+      "orientation": null
+    },
+    {
+      "id": "V7",
+      "ship": null,
+      "x": null,
+      "y": null,
+      "orientation": null
+    },
+    {
+      "id": "V8",
+      "ship": null,
+      "x": null,
+      "y": null,
+      "orientation": null
+    },
+    {
+      "id": "V9",
+      "ship": null,
+      "x": null,
+      "y": null,
+      "orientation": null
+    },
+    {
+      "id": "V10",
+      "ship": null,
+      "x": null,
+      "y": null,
+      "orientation": null
+    },
+    {
+      "id": "V11",
+      "ship": null,
+      "x": null,
+      "y": null,
+      "orientation": null
+    },
+    {
+      "id": "V12",
+      "ship": null,
+      "x": null,
+      "y": null,
+      "orientation": null
+    },
+    {
+      "id": "V13",
+      "ship": null,
+      "x": null,
+      "y": null,
+      "orientation": null
+    },
+    {
+      "id": "V14",
+      "ship": null,
+      "x": null,
+      "y": null,
+      "orientation": null
+    },
+    {
+      "id": "V15",
+      "ship": null,
+      "x": null,
+      "y": null,
+      "orientation": null
+    }
+  ],
+  "final_state": [
+    {
+      "id": "V1",
+      "ship": null,
+      "x": null,
+      "y": null,
+      "orientation": null
+    },
+    {
+      "id": "V2",
+      "ship": null,
+      "x": null,
+      "y": null,
+      "orientation": null
+    },
+    {
+      "id": "V3",
+      "ship": null,
+      "x": null,
+      "y": null,
+      "orientation": null
+    },
+    {
+      "id": "V4",
+      "ship": 0,
+      "x": 5,
+      "y": 5,
+      "orientation": "Horizontal"
+    },
+    {
+      "id": "V5",
+      "ship": null,
+      "x": null,
+      "y": null,
+      "orientation": null
+    },
+    {
+      "id": "V6",
+      "ship": 0,
+      "x": 2,
+      "y": 1,
+      "orientation": "Horizontal"
+    },
+    {
+      "id": "V7",
+      "ship": null,
+      "x": null,
+      "y": null,
+      "orientation": null
+    },
+    {
+      "id": "V8",
+      "ship": null,
+      "x": null,
+      "y": null,
+      "orientation": null
+    },
+    {
+      "id": "V9",
+      "ship": null,
+      "x": null,
+      "y": null,
+      "orientation": null
+    },
+    {
+      "id": "V10",
+      "ship": 0,
+      "x": 17,
+      "y": 5,
+      "orientation": "Horizontal"
+    },
+    {
+      "id": "V11",
+      "ship": null,
+      "x": null,
+      "y": null,
+      "orientation": null
+    },
+    {
+      "id": "V12",
+      "ship": 0,
+      "x": 1,
+      "y": 5,
+      "orientation": "Horizontal"
+    },
+    {
+      "id": "V13",
+      "ship": null,
+      "x": null,
+      "y": null,
+      "orientation": null
+    },
+    {
+      "id": "V14",
+      "ship": 0,
+      "x": 11,
+      "y": 6,
+      "orientation": "Horizontal"
+    },
+    {
+      "id": "V15",
+      "ship": null,
+      "x": null,
+      "y": null,
+      "orientation": null
+    }
+  ],
+  "final_fee": 605,
+  "final_objective": 605.2772,
+  "iterations": 4,
+  "duration_s": 0.37663354096002877,
+  "used_fallback": false,
+  "history": [
+    120.5445,
+    290.396,
+    440.2772,
+    550.2772,
+    605.2772
+  ],
+  "extra": {
+    "moves": [
+      "insert V14 at ship 0 (11, 6)",
+      "insert V6 at ship 0 (2, 1)",
+      "insert V10 at ship 0 (17, 5)",
+      "insert V12 at ship 0 (1, 5)"
+    ]
+  }
+}
