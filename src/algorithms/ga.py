@@ -1,15 +1,10 @@
-import argparse
-import json
-import os
-import random
 import time
 
 from src.constraints import is_valid
 from src.initial import random_initial_state
-from src.loader import load_problem
 from src.models import State
 from src.neighbors import get_random_neighbor
-from src.objective import objective, total_fee
+from src.objective import objective
 
 
 def make_population(problem, size, rng, p):
@@ -112,117 +107,3 @@ def genetic_algorithm(
         "duration_s": time.perf_counter() - start_time,
         "used_fallback": used_fallback,
     }
-
-
-def state_to_list(state):
-    result = []
-    for vehicle, pos, orientation in zip(state.problem.vehicles, state.positions, state.orientations):
-        ship, x, y = pos if pos is not None else (None, None, None)
-        result.append({"id": vehicle.id, "ship": ship, "x": x, "y": y, "orientation": orientation})
-    return result
-
-
-def build_record(result, data_file, seed, params):
-    final_state = result["final_state"]
-    return {
-        "algorithm": result["algorithm"],
-        "data_file": data_file,
-        "seed": seed,
-        "params": params,
-        "initial_state": state_to_list(result["initial_state"]),
-        "final_state": state_to_list(final_state),
-        "initial_fee": total_fee(result["initial_state"]),
-        "final_fee": total_fee(final_state),
-        "final_objective": objective(final_state),
-        "iterations": result["iterations"],
-        "duration_s": result["duration_s"],
-        "used_fallback": result["used_fallback"],
-        "history": result["history"],
-        "extra": {
-            "population_size": result["population_size"],
-            "history_avg": result["history_avg"],
-        },
-    }
-
-
-def experiment_configs(control_population, iteration_variants, control_iterations, population_variants):
-    configs = [("kontrol_populasi", control_population, it) for it in iteration_variants]
-    configs += [("kontrol_iterasi", pop, control_iterations) for pop in population_variants]
-    return configs
-
-
-def run_experiments(
-    data_file,
-    control_population,
-    iteration_variants,
-    control_iterations,
-    population_variants,
-    seeds,
-    output_dir="output",
-    **ga_params,
-):
-    problem = load_problem(data_file)
-    dataset = os.path.splitext(os.path.basename(data_file))[0]
-    summary = []
-    configs = experiment_configs(control_population, iteration_variants, control_iterations, population_variants)
-    for group, population_size, iterations in configs:
-        folder = os.path.join(output_dir, "ga", dataset, group)
-        os.makedirs(folder, exist_ok=True)
-        for run, seed in enumerate(seeds, start=1):
-            params = {"population_size": population_size, "iterations": iterations, **ga_params}
-            result = genetic_algorithm(problem, random.Random(seed), **params)
-            record = build_record(result, data_file, seed, params)
-            path = os.path.join(folder, f"pop{population_size}_iter{iterations}_run{run}_seed{seed}.json")
-            with open(path, "w", encoding="utf-8") as f:
-                json.dump(record, f, indent=2)
-            row = {
-                "group": group,
-                "population_size": population_size,
-                "iterations": iterations,
-                "run": run,
-                "seed": seed,
-                "initial_fee": record["initial_fee"],
-                "final_fee": record["final_fee"],
-                "duration_s": record["duration_s"],
-                "path": path,
-            }
-            summary.append(row)
-            print(
-                f"{group:<17} pop {population_size:>4} iter {iterations:>4} run {run} seed {seed}: "
-                f"fee {row['initial_fee']} -> {row['final_fee']}, {row['duration_s']:.2f} s"
-            )
-    with open(os.path.join(output_dir, "ga", dataset, "summary.json"), "w", encoding="utf-8") as f:
-        json.dump(summary, f, indent=2)
-    return summary
-
-
-def main():
-    parser = argparse.ArgumentParser()
-    parser.add_argument("--data", default="data/kecil.json")
-    parser.add_argument("--control-population", type=int, default=50)
-    parser.add_argument("--iteration-variants", type=int, nargs=3, default=[50, 100, 200])
-    parser.add_argument("--control-iterations", type=int, default=100)
-    parser.add_argument("--population-variants", type=int, nargs=3, default=[20, 50, 100])
-    parser.add_argument("--seeds", type=int, nargs="+", default=[1, 2, 3])
-    parser.add_argument("--p", type=float, default=0.3)
-    parser.add_argument("--crossover-rate", type=float, default=0.9)
-    parser.add_argument("--mutation-rate", type=float, default=0.3)
-    parser.add_argument("--elite", type=int, default=1)
-    args = parser.parse_args()
-
-    run_experiments(
-        args.data,
-        args.control_population,
-        args.iteration_variants,
-        args.control_iterations,
-        args.population_variants,
-        args.seeds,
-        p=args.p,
-        crossover_rate=args.crossover_rate,
-        mutation_rate=args.mutation_rate,
-        elite=args.elite,
-    )
-
-
-if __name__ == "__main__":
-    main()
