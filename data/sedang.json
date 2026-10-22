@@ -1,0 +1,22 @@
+{
+  "ships": [
+    {"Dimensions": {"w": 10, "l": 20}, "MaxCapacity": 100}
+  ],
+  "vehicles": [
+    {"id": "V1", "Dimensions": {"w": 2, "l": 4}, "ShippingFee": 60, "Weight": 8, "ETA": 3},
+    {"id": "V2", "Dimensions": {"w": 3, "l": 5}, "ShippingFee": 95, "Weight": 14, "ETA": 2},
+    {"id": "V3", "Dimensions": {"w": 2, "l": 3}, "ShippingFee": 35, "Weight": 5, "ETA": 5},
+    {"id": "V4", "Dimensions": {"w": 3, "l": 6}, "ShippingFee": 120, "Weight": 18, "ETA": 1},
+    {"id": "V5", "Dimensions": {"w": 2, "l": 2}, "ShippingFee": 25, "Weight": 3, "ETA": 4},
+    {"id": "V6", "Dimensions": {"w": 4, "l": 6}, "ShippingFee": 150, "Weight": 25, "ETA": 2},
+    {"id": "V7", "Dimensions": {"w": 2, "l": 5}, "ShippingFee": 70, "Weight": 9, "ETA": 3},
+    {"id": "V8", "Dimensions": {"w": 3, "l": 4}, "ShippingFee": 80, "Weight": 12, "ETA": 6},
+    {"id": "V9", "Dimensions": {"w": 1, "l": 3}, "ShippingFee": 20, "Weight": 2, "ETA": 2},
+    {"id": "V10", "Dimensions": {"w": 4, "l": 5}, "ShippingFee": 110, "Weight": 20, "ETA": 4},
+    {"id": "V11", "Dimensions": {"w": 2, "l": 6}, "ShippingFee": 75, "Weight": 11, "ETA": 5},
+    {"id": "V12", "Dimensions": {"w": 3, "l": 3}, "ShippingFee": 55, "Weight": 7, "ETA": 1},
+    {"id": "V13", "Dimensions": {"w": 2, "l": 4}, "ShippingFee": 50, "Weight": 6, "ETA": 3},
+    {"id": "V14", "Dimensions": {"w": 5, "l": 6}, "ShippingFee": 170, "Weight": 30, "ETA": 2},
+    {"id": "V15", "Dimensions": {"w": 1, "l": 2}, "ShippingFee": 15, "Weight": 1, "ETA": 7}
+  ]
+}
