@@ -7,6 +7,7 @@ import json
 import os
 import random
 import sys
+import inspect
 
 from src.loader import load_problem
 from src.objective import total_fee, objective
@@ -82,8 +83,16 @@ def build_record(problem, result, data_file, seed, params):
     return record
 
 
-def save_record(record, run):
-    folder = os.path.join("output", record["algorithm"])
+def ga_defaults():
+    params = inspect.signature(genetic_algorithm).parameters
+    return {
+        "population_size": params["population_size"].default,
+        "iterations": params["iterations"].default,
+    }
+
+
+def save_record(record, run, folder=None):
+    folder = folder or os.path.join("output", record["algorithm"])
     os.makedirs(folder, exist_ok=True)
     path = os.path.join(folder, f"run{run}_seed{record['seed']}.json")
     with open(path, "w", encoding="utf-8") as f:
@@ -91,22 +100,30 @@ def save_record(record, run):
     return path
 
 
-def save_plots(result, record, run):
-    base = os.path.join("output", record["algorithm"], f"run{run}_seed{record['seed']}")
+def save_plots(result, record, run, folder=None):
+    folder = folder or os.path.join("output", record["algorithm"])
+    base = os.path.join(folder, f"run{run}_seed{record['seed']}")
     plot_objective_history(result, f"{base}_objective.png")
     plot_deck_state(result["initial_state"], f"{base}_awal.png", title="State Awal")
     plot_deck_state(result["final_state"], f"{base}_akhir.png", title="State Akhir")
 
 
-def run_experiment(algorithm, data_file, seeds):
+def run_experiment(algorithm, data_file, seeds, params=None):
     problem = load_problem(data_file)
     run_algorithm = ALGORITHMS[algorithm]
+    params = params or {}
+    folder = os.path.join("output", algorithm)
+    if algorithm == "ga":
+        params = {**ga_defaults(), **params}
+        dataset = os.path.splitext(os.path.basename(data_file))[0]
+        folder = os.path.join(folder, dataset, f"pop{params['population_size']}_iter{params['iterations']}")
+        print(f"Konfigurasi GA: populasi {params['population_size']}, iterasi {params['iterations']} -> {folder}")
     records = []
     for run, seed in enumerate(seeds, start=1):
-        result = run_algorithm(problem, random.Random(seed))
-        record = build_record(problem, result, data_file, seed, {})
-        path = save_record(record, run)
-        save_plots(result, record, run)
+        result = run_algorithm(problem, random.Random(seed), **params)
+        record = build_record(problem, result, data_file, seed, params)
+        path = save_record(record, run, folder)
+        save_plots(result, record, run, folder)
         print(f"run {run} seed {seed}: fee {record['final_fee']}, iterasi {record['iterations']}, {record['duration_s']:.3f} s -> {path}")
         records.append(record)
     return records
@@ -153,9 +170,13 @@ def menu():
         data_pick = choose_from("Pilih file data:", data_files, "Kembali")
         if data_pick == 0:
             continue
+        params = {}
+        if algorithms[pick - 1] == "ga":
+            params["population_size"] = ask_number("Jumlah populasi (2-10000): ", 2, 10000)
+            params["iterations"] = ask_number("Banyak iterasi (1-100000): ", 1, 100000)
         runs = ask_number("Mau dijalankan berapa kali? (Enter = 1): ", 1, 10, default=1)
         data_file = os.path.join("data", data_files[data_pick - 1])
-        records = run_experiment(algorithms[pick - 1], data_file, list(range(1, runs + 1)))
+        records = run_experiment(algorithms[pick - 1], data_file, list(range(1, runs + 1)), params)
         show_result(records)
 
 
@@ -171,8 +192,17 @@ def main():
     parser.add_argument("--algorithm", choices=list(ALGORITHMS), default="hc")
     parser.add_argument("--data", default="data/kecil.json")
     parser.add_argument("--seeds", type=int, nargs="+", default=[1, 2, 3])
+    parser.add_argument("--population", type=int)
+    parser.add_argument("--iterations", type=int)
     args = parser.parse_args()
-    run_experiment(args.algorithm, args.data, args.seeds)
+    params = {}
+    if args.population is not None:
+        params["population_size"] = args.population
+    if args.iterations is not None:
+        params["iterations"] = args.iterations
+    if params and args.algorithm != "ga":
+        parser.error("--population dan --iterations hanya untuk --algorithm ga")
+    run_experiment(args.algorithm, args.data, args.seeds, params)
 
 
 if __name__ == "__main__":
