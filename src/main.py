@@ -2,6 +2,11 @@ import argparse
 import json
 import os
 import random
+import argparse
+import json
+import os
+import random
+import sys
 
 from src.loader import load_problem
 from src.objective import total_fee, objective
@@ -13,6 +18,8 @@ from src.algorithms.hc import (
     hill_climb_random_restart,
 )
 from src.algorithms.sa import simulated_annealing
+from src.algorithms.ga import genetic_algorithm
+from src.visual import plot_objective_history, plot_deck_state
 
 ALGORITHMS = {
     "hc": hill_climb,
@@ -20,7 +27,19 @@ ALGORITHMS = {
     "hc_stochastic": hill_climb_stochastic,
     "hc_random_restart": hill_climb_random_restart,
     "sa": simulated_annealing,
+    "ga": genetic_algorithm,
 }
+
+
+NAMES = {
+    "hc": "Steepest Ascent Hill-Climbing",
+    "hc_sideways": "Hill-Climbing with Sideways Move",
+    "hc_stochastic": "Stochastic Hill-Climbing",
+    "hc_random_restart": "Random Restart Hill-Climbing",
+    "sa": "Simulated Annealing",
+    "ga": "Genetic Algorithm",
+}
+
 
 CORE_KEYS = {
     "algorithm", "params", "initial_state", "final_state", "best_state",
@@ -72,20 +91,88 @@ def save_record(record, run):
     return path
 
 
+def save_plots(result, record, run):
+    base = os.path.join("output", record["algorithm"], f"run{run}_seed{record['seed']}")
+    plot_objective_history(result, f"{base}_objective.png")
+    plot_deck_state(result["initial_state"], f"{base}_awal.png", title="State Awal")
+    plot_deck_state(result["final_state"], f"{base}_akhir.png", title="State Akhir")
+
+
+def run_experiment(algorithm, data_file, seeds):
+    problem = load_problem(data_file)
+    run_algorithm = ALGORITHMS[algorithm]
+    records = []
+    for run, seed in enumerate(seeds, start=1):
+        result = run_algorithm(problem, random.Random(seed))
+        record = build_record(problem, result, data_file, seed, {})
+        path = save_record(record, run)
+        save_plots(result, record, run)
+        print(f"run {run} seed {seed}: fee {record['final_fee']}, iterasi {record['iterations']}, {record['duration_s']:.3f} s -> {path}")
+        records.append(record)
+    return records
+
+
+def ask_number(prompt, low, high, default=None):
+    while True:
+        text = input(prompt).strip()
+        if text == "" and default is not None:
+            return default
+        if text.isdigit() and low <= int(text) <= high:
+            return int(text)
+        print("Pilihan tidak valid, coba lagi.")
+
+
+def choose_from(title, options, zero_label):
+    print(f"\n{title}")
+    for i, option in enumerate(options, start=1):
+        print(f"  {i}. {option}")
+    print(f"  0. {zero_label}")
+    return ask_number("Pilih nomor: ", 0, len(options))
+
+
+def show_result(records):
+    best_run, best = max(enumerate(records, start=1), key=lambda item: item[1]["final_fee"])
+    print(f"\nHasil terbaik: run {best_run} (seed {best['seed']}), fee {best['final_fee']}")
+    print("Kendaraan yang dimuat:")
+    for v in best["final_state"]:
+        if v["ship"] is not None:
+            print(f"  {v['id']} -> kapal {v['ship'] + 1}, posisi ({v['x']}, {v['y']}), {v['orientation']}")
+    waiting = [v["id"] for v in best["final_state"] if v["ship"] is None]
+    print("Tidak dimuat: " + (", ".join(waiting) if waiting else "-"))
+
+
+def menu():
+    algorithms = list(ALGORITHMS)
+    data_files = sorted(f for f in os.listdir("data") if f.endswith(".json"))
+    while True:
+        names = [NAMES.get(key, key) for key in algorithms]
+        pick = choose_from("=== Menu Utama: pilih algoritma ===", names, "Keluar")
+        if pick == 0:
+            print("Sampai jumpa!")
+            return
+        data_pick = choose_from("Pilih file data:", data_files, "Kembali")
+        if data_pick == 0:
+            continue
+        runs = ask_number("Mau dijalankan berapa kali? (Enter = 1): ", 1, 10, default=1)
+        data_file = os.path.join("data", data_files[data_pick - 1])
+        records = run_experiment(algorithms[pick - 1], data_file, list(range(1, runs + 1)))
+        show_result(records)
+
+
 def main():
+    if len(sys.argv) == 1:
+        try:
+            menu()
+        except (KeyboardInterrupt, EOFError):
+            print("\nProgram dihentikan.")
+        return
+
     parser = argparse.ArgumentParser()
     parser.add_argument("--algorithm", choices=list(ALGORITHMS), default="hc")
     parser.add_argument("--data", default="data/kecil.json")
     parser.add_argument("--seeds", type=int, nargs="+", default=[1, 2, 3])
     args = parser.parse_args()
-
-    problem = load_problem(args.data)
-    run_algorithm = ALGORITHMS[args.algorithm]
-    for run, seed in enumerate(args.seeds, start=1):
-        result = run_algorithm(problem, random.Random(seed))
-        record = build_record(problem, result, args.data, seed, {})
-        path = save_record(record, run)
-        print(f"run {run} seed {seed}: fee {record['final_fee']}, iterasi {record['iterations']}, {record['duration_s']:.3f} s -> {path}")
+    run_experiment(args.algorithm, args.data, args.seeds)
 
 
 if __name__ == "__main__":
