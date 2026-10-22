@@ -1,0 +1,338 @@
+{
+  "algorithm": "ga",
+  "data_file": "data/sedang.json",
+  "seed": 2,
+  "params": {
+    "population_size": 50,
+    "iterations": 50
+  },
+  "initial_state": [
+    {
+      "id": "V1",
+      "ship": null,
+      "x": null,
+      "y": null,
+      "orientation": null
+    },
+    {
+      "id": "V2",
+      "ship": null,
+      "x": null,
+      "y": null,
+      "orientation": null
+    },
+    {
+      "id": "V3",
+      "ship": null,
+      "x": null,
+      "y": null,
+      "orientation": null
+    },
+    {
+      "id": "V4",
+      "ship": 0,
+      "x": 14,
+      "y": 7,
+      "orientation": "Horizontal"
+    },
+    {
+      "id": "V5",
+      "ship": 0,
+      "x": 8,
+      "y": 0,
+      "orientation": "Vertical"
+    },
+    {
+      "id": "V6",
+      "ship": null,
+      "x": null,
+      "y": null,
+      "orientation": null
+    },
+    {
+      "id": "V7",
+      "ship": null,
+      "x": null,
+      "y": null,
+      "orientation": null
+    },
+    {
+      "id": "V8",
+      "ship": 0,
+      "x": 1,
+      "y": 1,
+      "orientation": "Vertical"
+    },
+    {
+      "id": "V9",
+      "ship": null,
+      "x": null,
+      "y": null,
+      "orientation": null
+    },
+    {
+      "id": "V10",
+      "ship": 0,
+      "x": 16,
+      "y": 3,
+      "orientation": "Horizontal"
+    },
+    {
+      "id": "V11",
+      "ship": null,
+      "x": null,
+      "y": null,
+      "orientation": null
+    },
+    {
+      "id": "V12",
+      "ship": 0,
+      "x": 8,
+      "y": 5,
+      "orientation": "Vertical"
+    },
+    {
+      "id": "V13",
+      "ship": null,
+      "x": null,
+      "y": null,
+      "orientation": null
+    },
+    {
+      "id": "V14",
+      "ship": null,
+      "x": null,
+      "y": null,
+      "orientation": null
+    },
+    {
+      "id": "V15",
+      "ship": 0,
+      "x": 1,
+      "y": 6,
+      "orientation": "Horizontal"
+    }
+  ],
+  "final_state": [
+    {
+      "id": "V1",
+      "ship": 0,
+      "x": 8,
+      "y": 3,
+      "orientation": "Vertical"
+    },
+    {
+      "id": "V2",
+      "ship": 0,
+      "x": 18,
+      "y": 3,
+      "orientation": "Vertical"
+    },
+    {
+      "id": "V3",
+      "ship": 0,
+      "x": 3,
+      "y": 1,
+      "orientation": "Vertical"
+    },
+    {
+      "id": "V4",
+      "ship": null,
+      "x": null,
+      "y": null,
+      "orientation": null
+    },
+    {
+      "id": "V5",
+      "ship": null,
+      "x": null,
+      "y": null,
+      "orientation": null
+    },
+    {
+      "id": "V6",
+      "ship": 0,
+      "x": 11,
+      "y": 5,
+      "orientation": "Vertical"
+    },
+    {
+      "id": "V7",
+      "ship": 0,
+      "x": 12,
+      "y": 0,
+      "orientation": "Horizontal"
+    },
+    {
+      "id": "V8",
+      "ship": 0,
+      "x": 1,
+      "y": 1,
+      "orientation": "Vertical"
+    },
+    {
+      "id": "V9",
+      "ship": 0,
+      "x": 2,
+      "y": 9,
+      "orientation": "Horizontal"
+    },
+    {
+      "id": "V10",
+      "ship": null,
+      "x": null,
+      "y": null,
+      "orientation": null
+    },
+    {
+      "id": "V11",
+      "ship": 0,
+      "x": 6,
+      "y": 5,
+      "orientation": "Vertical"
+    },
+    {
+      "id": "V12",
+      "ship": 0,
+      "x": 18,
+      "y": 8,
+      "orientation": "Horizontal"
+    },
+    {
+      "id": "V13",
+      "ship": 0,
+      "x": 4,
+      "y": 7,
+      "orientation": "Vertical"
+    },
+    {
+      "id": "V14",
+      "ship": null,
+      "x": null,
+      "y": null,
+      "orientation": null
+    },
+    {
+      "id": "V15",
+      "ship": 0,
+      "x": 1,
+      "y": 6,
+      "orientation": "Horizontal"
+    }
+  ],
+  "final_fee": 705,
+  "final_objective": 705.1188,
+  "iterations": 50,
+  "duration_s": 0.5257799169994541,
+  "used_fallback": false,
+  "history": [
+    405.198,
+    540.1782,
+    605.12375,
+    640.1485,
+    675.099,
+    675.099,
+    680.1089,
+    680.1089,
+    680.1089,
+    680.1089,
+    685.1188,
+    695.099,
+    695.099,
+    705.1188,
+    705.1188,
+    705.1188,
+    705.1188,
+    705.1188,
+    705.1188,
+    705.1188,
+    705.1188,
+    705.1188,
+    705.1188,
+    705.1188,
+    705.1188,
+    705.1188,
+    705.1188,
+    705.1188,
+    705.1188,
+    705.1188,
+    705.1188,
+    705.1188,
+    705.1188,
+    705.1188,
+    705.1188,
+    705.1188,
+    705.1188,
+    705.1188,
+    705.1188,
+    705.1188,
+    705.1188,
+    705.1188,
+    705.1188,
+    705.1188,
+    705.1188,
+    705.1188,
+    705.1188,
+    705.1188,
+    705.1188,
+    705.1188,
+    705.1188
+  ],
+  "extra": {
+    "history_avg": [
+      177.700544,
+      333.47205199999996,
+      428.69631699999996,
+      509.661865,
+      547.450084,
+      578.845926,
+      610.7270169999999,
+      612.126027,
+      615.2279080000001,
+      623.733452,
+      629.929195,
+      637.630482,
+      643.32276,
+      641.424938,
+      640.127017,
+      651.222265,
+      645.032462,
+      659.5302839999999,
+      654.0257300000001,
+      661.5202850000001,
+      657.428205,
+      656.722364,
+      644.834244,
+      652.0321650000001,
+      647.546421,
+      651.0382040000001,
+      652.6379069999999,
+      661.630284,
+      658.3290959999999,
+      668.121968,
+      664.722859,
+      663.022562,
+      653.028502,
+      663.925334,
+      659.028799,
+      654.5291950000001,
+      657.931769,
+      656.4336500000001,
+      646.6379069999999,
+      651.636719,
+      658.7288980000001,
+      668.717513,
+      666.322067,
+      650.134739,
+      646.439491,
+      653.832759,
+      661.7375109999999,
+      664.425631,
+      658.228403,
+      658.9286999999999,
+      664.023057
+    ],
+    "population_size": 50,
+    "moves": []
+  }
+}
