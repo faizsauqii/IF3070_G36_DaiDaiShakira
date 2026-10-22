@@ -1,0 +1,315 @@
+{
+  "algorithm": "hc_random_restart",
+  "data_file": "data/sedang.json",
+  "seed": 1,
+  "params": {
+    "max_restarts": 10
+  },
+  "initial_state": [
+    {
+      "id": "V1",
+      "ship": 0,
+      "x": 4,
+      "y": 7,
+      "orientation": "Horizontal"
+    },
+    {
+      "id": "V2",
+      "ship": null,
+      "x": null,
+      "y": null,
+      "orientation": null
+    },
+    {
+      "id": "V3",
+      "ship": null,
+      "x": null,
+      "y": null,
+      "orientation": null
+    },
+    {
+      "id": "V4",
+      "ship": null,
+      "x": null,
+      "y": null,
+      "orientation": null
+    },
+    {
+      "id": "V5",
+      "ship": 0,
+      "x": 12,
+      "y": 6,
+      "orientation": "Vertical"
+    },
+    {
+      "id": "V6",
+      "ship": null,
+      "x": null,
+      "y": null,
+      "orientation": null
+    },
+    {
+      "id": "V7",
+      "ship": null,
+      "x": null,
+      "y": null,
+      "orientation": null
+    },
+    {
+      "id": "V8",
+      "ship": null,
+      "x": null,
+      "y": null,
+      "orientation": null
+    },
+    {
+      "id": "V9",
+      "ship": 0,
+      "x": 11,
+      "y": 0,
+      "orientation": "Horizontal"
+    },
+    {
+      "id": "V10",
+      "ship": 0,
+      "x": 8,
+      "y": 4,
+      "orientation": "Horizontal"
+    },
+    {
+      "id": "V11",
+      "ship": null,
+      "x": null,
+      "y": null,
+      "orientation": null
+    },
+    {
+      "id": "V12",
+      "ship": null,
+      "x": null,
+      "y": null,
+      "orientation": null
+    },
+    {
+      "id": "V13",
+      "ship": null,
+      "x": null,
+      "y": null,
+      "orientation": null
+    },
+    {
+      "id": "V14",
+      "ship": null,
+      "x": null,
+      "y": null,
+      "orientation": null
+    },
+    {
+      "id": "V15",
+      "ship": null,
+      "x": null,
+      "y": null,
+      "orientation": null
+    }
+  ],
+  "final_state": [
+    {
+      "id": "V1",
+      "ship": null,
+      "x": null,
+      "y": null,
+      "orientation": null
+    },
+    {
+      "id": "V2",
+      "ship": 0,
+      "x": 13,
+      "y": 1,
+      "orientation": "Horizontal"
+    },
+    {
+      "id": "V3",
+      "ship": null,
+      "x": null,
+      "y": null,
+      "orientation": null
+    },
+    {
+      "id": "V4",
+      "ship": 0,
+      "x": 8,
+      "y": 6,
+      "orientation": "Horizontal"
+    },
+    {
+      "id": "V5",
+      "ship": 0,
+      "x": 6,
+      "y": 8,
+      "orientation": "Vertical"
+    },
+    {
+      "id": "V6",
+      "ship": 0,
+      "x": 15,
+      "y": 6,
+      "orientation": "Vertical"
+    },
+    {
+      "id": "V7",
+      "ship": null,
+      "x": null,
+      "y": null,
+      "orientation": null
+    },
+    {
+      "id": "V8",
+      "ship": null,
+      "x": null,
+      "y": null,
+      "orientation": null
+    },
+    {
+      "id": "V9",
+      "ship": 0,
+      "x": 12,
+      "y": 3,
+      "orientation": "Horizontal"
+    },
+    {
+      "id": "V10",
+      "ship": null,
+      "x": null,
+      "y": null,
+      "orientation": null
+    },
+    {
+      "id": "V11",
+      "ship": null,
+      "x": null,
+      "y": null,
+      "orientation": null
+    },
+    {
+      "id": "V12",
+      "ship": 0,
+      "x": 17,
+      "y": 1,
+      "orientation": "Horizontal"
+    },
+    {
+      "id": "V13",
+      "ship": null,
+      "x": null,
+      "y": null,
+      "orientation": null
+    },
+    {
+      "id": "V14",
+      "ship": 0,
+      "x": 2,
+      "y": 7,
+      "orientation": "Horizontal"
+    },
+    {
+      "id": "V15",
+      "ship": 0,
+      "x": 14,
+      "y": 3,
+      "orientation": "Horizontal"
+    }
+  ],
+  "final_fee": 650,
+  "final_objective": 650.27225,
+  "iterations": 52,
+  "duration_s": 3.7730462078470737,
+  "used_fallback": false,
+  "history": [
+    215.297,
+    385.297,
+    535.22275,
+    615.22275,
+    625.2079,
+    640.2079,
+    650.2079,
+    80.693,
+    250.495,
+    400.4851,
+    520.2772,
+    615.2772,
+    640.2772,
+    640.3465,
+    160.3465,
+    330.297,
+    480.2475,
+    600.2475,
+    615.2475,
+    160.594,
+    330.5445,
+    480.396,
+    600.2772,
+    635.2772,
+    495.24255,
+    615.24255,
+    630.24255,
+    25.792,
+    195.6435,
+    345.4158,
+    465.4158,
+    575.4158,
+    595.4158,
+    610.4158,
+    135.5445,
+    305.5445,
+    455.5445,
+    565.3267,
+    615.3267,
+    230.5544,
+    400.3465,
+    520.3465,
+    615.27225,
+    635.27225,
+    650.27225,
+    150.594,
+    320.495,
+    440.4158,
+    550.2673,
+    605.2673,
+    605.31185,
+    240.4851,
+    390.297,
+    510.297,
+    605.297,
+    640.297,
+    20.594,
+    190.594,
+    340.594,
+    460.4158,
+    570.3564,
+    605.3564,
+    605.3861
+  ],
+  "extra": {
+    "restarts": 10,
+    "iterations_per_restart": [
+      6,
+      6,
+      4,
+      4,
+      2,
+      6,
+      4,
+      5,
+      5,
+      4,
+      6
+    ],
+    "moves": [
+      "insert V14 at ship 0 (2, 7)",
+      "insert V4 at ship 0 (8, 6)",
+      "insert V2 at ship 0 (13, 1)",
+      "insert V9 at ship 0 (12, 3)",
+      "insert V15 at ship 0 (14, 3)"
+    ]
+  }
+}
